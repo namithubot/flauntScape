@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+  <title>Scapic</title>
+  <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+
+  <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
+  <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+  <script src="https://cdn.rawgit.com/zcanter/aframe-gradient-sky/master/dist/gradientsky.min.js"></script>
+  <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/2.3.0/nunjucks.min.js"></script>
+  <script src="https://unpkg.com/aframe-template-component@3.1.1/dist/aframe-template-component.min.js"></script>
+  <!-- Js Event register on the elemnets -->
+  <script src="https://rawgit.com/jmeas/unicode-escape.js/master/index.js"></script>
+  <script src="js/set-image.js"></script>
+  <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js" ></script>
+
+
+  <script src="js/draggable.js"></script>
+  <script src="js/cursor-component.js"></script>
+  <script src="js/tooltip-component.js"></script>
+
+  <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
+  <script src="https://rawgit.com/peachananr/shuffle-images/master/jquery.shuffle-images.min.js"></script>
+  <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
+   <script src="iframe.js"></script>
+  
+  <!-- <script src="js/NoSleep.min.js" type="text/javascript"></script> -->
+
+</head>
+
+<body>
+    <a-scene debug=true light="defaultLightsEnabled: true">
+      <a-assets>
+        <img id="hotspot" src="../assets/img/hotspot.png" />
+        <img id="hotspot_media_image_thumbnail" src="" />
+        <img id="hotspot_media_image_original" src="" />
+        <video id="" src='' ></video>
+        <a-mixin id="H_image" material="src: #hotspot"></a-mixin>
+        <script id="link" type="text/nunjucks">
+          <a-plane mixin="H_image" class="link" id="hotspotImage" position="0 0 0.2" height="0.8" width="0.8" material="shader: flat;side:double;transparent:true"
+            event-set__1="_event: mousedown; scale: 1 1 1" event-set__2="_event: mouseup; scale: 1.2 1.2 1" event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+            event-set__4="_event: mouseleave; scale: 1 1 1" show-hotspot-tooltip="on:click;" hide-hotspot-tooltip="on:mouseleave;"
+            load-another-scene="on:click;">
+          </a-plane>
+          <a-entity id="tooltip" tooltip=""
+                  position="2 0 .02"
+                  scale="1.5 1 1" visible="false">
+          </a-entity>
+          <a-image id='image-tooltip' scale="3 1.5 1" class="ignoreHotspot" visible="false" position="2 -1.31 0.02" src=""></a-image>
+          <a-video id="hotspotVideo" scale="3 1.5 1" class="ignoreHotspot" visible="false" position="2 -1.31 0.02" src=""></a-video>     
+        </script>
+      </a-assets>
+      <!-- Lights. -->
+      <a-entity id="pointLight" light="type: point" position="0 3 3"></a-entity>
+      <a-entity id="dirLight" light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+      <!-- Camera. -->
+      <a-entity id="cameraWrapper" position="0 1.3 0">
+        <a-entity id="camera" camera look-controls mouse-cursor>
+          <!-- Cursor. -->
+          <a-entity id="cursor" position="0 0 -2" geometry="primitive: ring; radiusOuter: 0.016;
+                          radiusInner: 0.01;" material="color: #ff9; shader: flat; transparent: true; opacity: 0.5" scale="2 2 2"
+            cursor="fuse: true" raycaster>
+            <a-animation begin="click" easing="ease-in" attribute="scale" fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+            <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+      <a-sky src="https://assets.scapic.com/World.jpg"  crossOrigin='anonymous' material="side:double" visible="true"></a-sky>
+      <a-gradient-sky visible="false"></a-gradient-sky>
+    </a-scene>
+    <div id="root"></div>
+    <script id="customJS"></script>
+    <script src="../dist/bundle.js"></script>
+</body>
+
+</html>
